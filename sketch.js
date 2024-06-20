@@ -24,20 +24,37 @@ function drawBackground() {
   let x = 0;
   let y = 0;
   let gap = int(random(75, 100));
-  let drawRandom = 1; //int(random(2));
+  let drawRandom = int(random(4));
   scale(0.8);
 
   switch (drawRandom) {
     case 0:
-      for (i = 0; i < 1200; i++) {
+      for (i = 0; i * gap < 2200; i++) {
         drawDiamond(x + i * gap, y, i);
       }
       break;
     case 1:
-      for (i = 0; i < 1200; i++) {
+      for (i = 0; i * gap < 2200; i++) {
         drawTriangle(x + i * gap, y, i);
       }
       break;
+    case 2:
+      for (i = 0; i * gap < 2200; i++) {
+        let y =
+          i % 3 === 0
+            ? int(random(300))
+            : i % 3 === 1
+            ? int(random(400, 600))
+            : int(random(700, 900));
+        drawRect(x + i * gap, y, i);
+      }
+      break;
+    case 3:
+      for (j = 0; y + j * gap < 1000; j += 10) {
+        for (i = 0; x + i * gap < 2200; i++) {
+          drawCat(x + i * gap, y + j * gap, i);
+        }
+      }
     default:
       break;
   }
@@ -97,6 +114,80 @@ function drawTriangle(x, y, i) {
   triangle(x1 - 10, y1 + 175, x1, y1 + 185, x1 + 10, y1 + 175);
   ellipse(x1, y1 + 194, 6, 6);
   ellipse(x1, y1 + 204, 4, 4);
+  pop();
+}
+
+// draw rect
+function drawRect(x, y, i) {
+  let x1 = x;
+  let y1 = y;
+  let randomRect = int(random(2));
+
+  switch (randomRect) {
+    case 0:
+      push();
+      noFill();
+      strokeWeight(3);
+      stroke(colorPatterns[getPattern][1]);
+      rect(x1, y1, 50, 50);
+      fill(colorPatterns[getPattern][1]);
+      rect(x1 + 25, y1 + 25, 50, 50);
+      stroke("#ffffff");
+      line(x1 + 25, y1 + 50, x1 + 50, y1 + 50);
+      line(x1 + 50, y1 + 25, x1 + 50, y1 + 50);
+      pop();
+      break;
+    case 1:
+      push();
+      noFill();
+      strokeWeight(3);
+      stroke(colorPatterns[getPattern][1]);
+      rect(x1, y1, 50, 50);
+      fill(colorPatterns[getPattern][1]);
+      rect(x1 + 25, y1 + 25, 50, 50);
+      noFill();
+      rect(x1 + 50, y1 + 50, 50, 50);
+      stroke("#ffffff");
+      line(x1 + 25, y1 + 50, x1 + 50, y1 + 50);
+      line(x1 + 50, y1 + 25, x1 + 50, y1 + 50);
+      line(x1 + 50, y1 + 50, x1 + 75, y1 + 50);
+      line(x1 + 50, y1 + 50, x1 + 50, y1 + 75);
+      pop();
+      break;
+    default:
+      break;
+  }
+}
+
+// draw cats
+function drawCat(x, y, i) {
+  let x1 = x;
+  let y1 = i % 2 === 0 ? y + 50 : y + 150;
+  push();
+  if (i % 2 === 0) {
+    noFill();
+  } else {
+    fill(colorPatterns[getPattern][1]);
+  }
+  stroke(colorPatterns[getPattern][1]);
+  strokeWeight(3);
+  triangle(
+    x1 - 37.5,
+    y1 - 11,
+    x1 - 37.5 - 3.5,
+    y1 - 40,
+    x1 - 37.5 + 20.5,
+    y1 - 27
+  );
+  triangle(
+    x1 + 37.5,
+    y1 - 11,
+    x1 + 37.5 + 3.5,
+    y1 - 40,
+    x1 + 37.5 - 20.5,
+    y1 - 27
+  );
+  ellipse(x1, y1, 75, 60);
   pop();
 }
 
